@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Nuevo
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form>
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Descripcion</ion-label>
+        <ion-input
+          [(ngModel)]="producto.descripcion"
+          name="descripcion"
+          #descripcion="ngModel"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Categoria</ion-label>
+        <ion-select
+          placeholder="Selecciona uno"
+          [(ngModel)]="producto.categoria"
+          name="categoria"
+          #categoria="ngModel"
+        >
+          <ion-select-option
+            *ngFor="let categoria of categorias"
+            [value]="categoria"
+            >{{ categoria }}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Precio</ion-label>
+        <ion-input
+          [(ngModel)]="producto.precio"
+          name="precio"
+          #precio="ngModel"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Stock</ion-label>
+        <ion-input
+          [(ngModel)]="producto.stock"
+          name="stock"
+          #stock="ngModel"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Url de foto</ion-label>
+        <ion-input
+          [(ngModel)]="producto.urlFoto"
+          name="urlFoto"
+          #urlFoto="ngModel"
+        ></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-button expand="block" color="danger" (click)="guardar()"
+      >Guardar</ion-button
+    >
+  </form>
+</ion-content>
