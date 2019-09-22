@@ -1,5 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import { ModalController } from "@ionic/angular";
+import { Component, OnInit, Input } from "@angular/core";
+import { ModalController, NavParams } from "@ionic/angular";
 
 @Component({
   selector: "app-producto-form",
@@ -9,9 +9,11 @@ import { ModalController } from "@ionic/angular";
 export class ProductoFormComponent implements OnInit {
   categorias = ["TECNOLOGIA", "HOGAR", "BELLEZA"];
 
-  producto = {};
+  @Input() producto = {};
 
-  constructor(public modalController: ModalController) {}
+  constructor(public modalController: ModalController, navParams: NavParams) {
+    this.producto = navParams.get("producto");
+  }
 
   ngOnInit() {}
 

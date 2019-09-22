@@ -1,8 +1,4 @@
-<ion-card
-  *ngFor="let producto of _productos"
-  class="welcome-card"
-  (click)="productoClick(producto)"
->
+<ion-card *ngFor="let producto of _productos" class="welcome-card">
   <img [src]="producto.urlFoto" alt="" />
   <ion-card-header>
     <ion-card-subtitle>{{ producto.categoria }}</ion-card-subtitle>
@@ -22,4 +18,7 @@
     <ion-label>{{ producto.stock }}</ion-label>
     <ion-button fill="outline" slot="end">Buy</ion-button>
   </ion-item>
+  <ion-button expand="block" color="danger" (click)="productoClick(producto)"
+    >Editar</ion-button
+  >
 </ion-card>
