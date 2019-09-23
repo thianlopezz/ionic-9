@@ -13,8 +13,7 @@ export class ProductoListComponent implements OnInit {
 
   ngOnInit() {}
 
-  productoClick(producto) {
-    debugger;
-    this._productoClick.next(producto);
+  productoClick(producto, accion) {
+    this._productoClick.next({ producto, accion });
   }
 }

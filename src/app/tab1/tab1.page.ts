@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { ModalController } from "@ionic/angular";
+import { ModalController, ToastController } from "@ionic/angular";
 import { ProductoFormComponent } from "../components/producto-form/producto-form.component";
 
 @Component({
@@ -41,33 +41,74 @@ export class Tab1Page {
     }
   ];
 
-  constructor(public modalController: ModalController) {}
+  loading = false;
 
-  onProductoClick(producto) {
+  constructor(
+    public modalController: ModalController,
+    public toastController: ToastController
+  ) {}
+
+  onProductoClick(params) {
+    const { producto, accion } = params;
+
+    if (accion == "U") {
+      this.showForm(producto);
+    } else if (accion == "D") {
+      // logica de eliminar
+      let indice = this.productos.findIndex(
+        productoFind => productoFind._id == producto._id
+      );
+
+      this.productos.splice(indice, 1);
+
+      this.presentToast("Eliminacion correcta", 4000);
+    }
+
     // debugger;
     // console.log("Informacion desde hijo");
     // console.log(producto);
-    this.showForm(producto);
   }
 
   async showForm(producto?) {
     const modal = await this.modalController.create({
       component: ProductoFormComponent,
       componentProps: {
-        producto
+        producto: producto || {}
       }
     });
     await modal.present();
 
     const { data } = await modal.onWillDismiss();
-    if (data.producto._id) {
-      let indice = this.productos.findIndex(
-        productoFind => productoFind._id == data.producto._id
-      );
 
-      this.productos[indice] = data.producto;
-    } else {
-      this.productos.push({ ...data.producto, _id: this.productos.length + 1 });
-    }
+    this.loading = true;
+
+    setTimeout(() => {
+      if (data.producto._id) {
+        let indice = this.productos.findIndex(
+          productoFind => productoFind._id == data.producto._id
+        );
+
+        this.productos[indice] = data.producto;
+
+        this.presentToast("Modificacion correcta");
+      } else {
+        this.productos.push({
+          ...data.producto,
+          _id: this.productos.length + 1
+        });
+
+        this.presentToast("Insercion correcta");
+      }
+
+      this.loading = false;
+    }, 4000);
+  }
+
+  async presentToast(mensaje, duracion = 2000) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: duracion
+    });
+    toast.present();
   }
 }
