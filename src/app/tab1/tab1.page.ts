@@ -20,9 +20,21 @@ export class Tab1Page {
   ) {}
 
   ionViewWillEnter() {
-    this.pruductoService.getProductos().subscribe((response: any) => {
-      this.productos = response.productos;
-    });
+    this.getProductos();
+  }
+
+  getProductos() {
+    this.loading = true;
+    this.pruductoService.getProductos().subscribe(
+      (response: any) => {
+        this.productos = response.productos;
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+        this.presentToast("No se pudo completar!");
+      }
+    );
   }
 
   onProductoClick(params) {
@@ -59,26 +71,13 @@ export class Tab1Page {
 
     this.loading = true;
 
-    setTimeout(() => {
-      if (data.producto._id) {
-        let indice = this.productos.findIndex(
-          productoFind => productoFind._id == data.producto._id
-        );
+    if (data.producto._id) {
+      this.updateProducto(data.producto);
+    } else {
+      this.insertProducto(data.producto);
+    }
 
-        this.productos[indice] = data.producto;
-
-        this.presentToast("Modificacion correcta");
-      } else {
-        this.productos.push({
-          ...data.producto,
-          _id: this.productos.length + 1
-        });
-
-        this.presentToast("Insercion correcta");
-      }
-
-      this.loading = false;
-    }, 4000);
+    this.loading = false;
   }
 
   async presentToast(mensaje, duracion = 2000) {
@@ -87,5 +86,39 @@ export class Tab1Page {
       duration: duracion
     });
     toast.present();
+  }
+
+  insertProducto(producto) {
+    this.pruductoService.insertProducto(producto).subscribe(
+      (response: any) => {
+        debugger;
+        if (response.success) {
+          this.presentToast("Ingresado correctamente");
+          this.getProductos();
+        } else {
+          this.presentToast("No se pudo completar!");
+        }
+      },
+      error => {
+        debugger;
+        this.presentToast("No se pudo completar!");
+      }
+    );
+  }
+
+  updateProducto(producto) {
+    this.pruductoService.updateProducto(producto).subscribe(
+      (response: any) => {
+        if (response.success) {
+          this.presentToast("Actualizado correctamente");
+          this.getProductos();
+        } else {
+          this.presentToast("No se pudo completar!");
+        }
+      },
+      error => {
+        this.presentToast("No se pudo completar!");
+      }
+    );
   }
 }
