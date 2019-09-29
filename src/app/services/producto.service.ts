@@ -11,6 +11,10 @@ export class ProductoService {
     private globalConfig: GlobalConfigService
   ) {}
 
+  getProductoById(_id) {
+    return this.http.get(this.globalConfig.getUrl() + "/productos/" + _id);
+  }
+
   getProductos() {
     return this.http.get(this.globalConfig.getUrl() + "/productos");
   }

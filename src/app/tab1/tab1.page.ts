@@ -1,5 +1,9 @@
 import { Component } from "@angular/core";
-import { ModalController, ToastController } from "@ionic/angular";
+import {
+  ModalController,
+  ToastController,
+  NavController
+} from "@ionic/angular";
 import { ProductoFormComponent } from "../components/producto-form/producto-form.component";
 import { ProductoService } from "../services/producto.service";
 
@@ -16,7 +20,8 @@ export class Tab1Page {
   constructor(
     public modalController: ModalController,
     public toastController: ToastController,
-    private pruductoService: ProductoService
+    private productoService: ProductoService,
+    private navController: NavController
   ) {}
 
   ionViewWillEnter() {
@@ -25,7 +30,7 @@ export class Tab1Page {
 
   getProductos() {
     this.loading = true;
-    this.pruductoService.getProductos().subscribe(
+    this.productoService.getProductos().subscribe(
       (response: any) => {
         this.productos = response.productos;
         this.loading = false;
@@ -51,6 +56,9 @@ export class Tab1Page {
       this.productos.splice(indice, 1);
 
       this.presentToast("Eliminacion correcta", 4000);
+    } else {
+      debugger;
+      this.navController.navigateForward("/tabs/tab1/detalle/" + producto._id);
     }
 
     // debugger;
@@ -89,7 +97,7 @@ export class Tab1Page {
   }
 
   insertProducto(producto) {
-    this.pruductoService.insertProducto(producto).subscribe(
+    this.productoService.insertProducto(producto).subscribe(
       (response: any) => {
         debugger;
         if (response.success) {
@@ -107,7 +115,7 @@ export class Tab1Page {
   }
 
   updateProducto(producto) {
-    this.pruductoService.updateProducto(producto).subscribe(
+    this.productoService.updateProducto(producto).subscribe(
       (response: any) => {
         if (response.success) {
           this.presentToast("Actualizado correctamente");

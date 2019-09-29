@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>producto-detalle</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <app-producto-list [_productos]="producto"></app-producto-list> -->
+  <ion-card class="welcome-card">
+    <img [src]="producto.urlFoto" alt="" />
+    <ion-card-header>
+      <ion-card-subtitle>{{ producto.categoria }}</ion-card-subtitle>
+      <ion-card-title>{{ producto.descripcion }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p *ngIf="producto.feCreacion">
+        {{ producto.feCreacion | date: "dd/MM/yyyy HH:mm" }}
+      </p>
+    </ion-card-content>
+    <ion-item>
+      <ion-icon name="pricetag" slot="start"></ion-icon>
+      <ion-label>{{ producto.precio | currency: "EUR" }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="basket" slot="start"></ion-icon>
+      <ion-label>{{ producto.stock }}</ion-label>
+      <ion-button fill="outline" slot="end">Buy</ion-button>
+    </ion-item>
+    <ion-button
+      expand="block"
+      color="danger"
+      (click)="productoClick(producto, 'U')"
+      >Editar</ion-button
+    >
+    <ion-button
+      expand="block"
+      color="danger"
+      (click)="productoClick(producto, 'D')"
+      >Eliminar</ion-button
+    >
+    <ion-button
+      expand="block"
+      color="danger"
+      [routerLink]="'/tabs/tab1/detalle/' + producto._id"
+      >Detalle</ion-button
+    >
+  </ion-card>
+</ion-content>

@@ -9,6 +9,7 @@ import { StatusBar } from "@ionic-native/status-bar/ngx";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
+// import { ProductoListComponent } from "./components/producto-list/producto-list.component";
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +20,7 @@ import { AppComponent } from "./app.component";
     IonicModule.forRoot(),
     AppRoutingModule
   ],
+  // exports: [ProductoListComponent],
   providers: [
     StatusBar,
     SplashScreen,
