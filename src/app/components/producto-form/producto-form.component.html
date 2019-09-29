@@ -48,12 +48,18 @@
         ></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Url de foto</ion-label>
-        <ion-input
+        <!-- <ion-label position="floating">Url de foto</ion-label> -->
+        <!-- <ion-input
           [(ngModel)]="producto.urlFoto"
           name="urlFoto"
           #urlFoto="ngModel"
-        ></ion-input>
+        ></ion-input> -->
+        <ion-button expand="block" color="danger" (click)="ejecutarCamara()"
+          >Foto</ion-button
+        >
+        <ion-button expand="block" color="danger" (click)="ejecutarPicker()"
+          >Seleccionar imagen</ion-button
+        >
       </ion-item>
     </ion-list>
     <ion-button expand="block" color="danger" (click)="guardar()"
